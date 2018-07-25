@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class Event {
 //	Members:
+	private final int _id;
 	private String _name;
 	private Date _date;
 	private EventStatus _status;
@@ -19,13 +20,12 @@ public class Event {
 	private String _organizer;
 
 //	Constructors:
-	public Event() {
-		super();
-	}
 
-	public Event(String _name, Date _date, EventStatus _status, EventType _type, String _place, double _price,
+	public Event(int id, String _name, Date _date, EventStatus _status, EventType _type, String _place, double _price,
 			int _participantsQuantity, String _organizer) {
 		super();
+
+		_id = id;
 		this._name = _name;
 		this._date = _date;
 		this._status = _status;
@@ -37,6 +37,10 @@ public class Event {
 	}
 
 //	Methods:
+	public int getId() {
+		return _id;
+	}
+
 	public String get_name() {
 		return _name;
 	}
