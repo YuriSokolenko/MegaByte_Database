@@ -4,8 +4,9 @@ import java.util.Date;
 
 public class Participant {
 //	Members:
-	protected final int _id;
+	protected final long _id;
 	protected String _firstName;
+	protected String _lastName;
 	protected int _telNumber;
 	protected String _city;
 	protected String _district;
@@ -16,11 +17,12 @@ public class Participant {
 	protected Gender _gender;
 
 //	Constructors:
-	public Participant(int _id, String _firstName, int _telNumber, String _city, String _district, Date _birthdate,
-			Date _repatriationYear, String _interests, Date _lastActiveDate, Gender _gender) {
+	public Participant(long _id, String _firstName, String lastName, int _telNumber, String _city, String _district,
+			Date _birthdate, Date _repatriationYear, String _interests, Date _lastActiveDate, Gender _gender) {
 		super();
 		this._id = _id;
 		this._firstName = _firstName;
+		this._lastName = lastName;
 		this._telNumber = _telNumber;
 		this._city = _city;
 		this._district = _district;
@@ -29,14 +31,28 @@ public class Participant {
 		this._interests = _interests;
 		this._lastActiveDate = _lastActiveDate;
 		this._gender = _gender;
+	}// c-tor
+
+	public Participant(long id) {
+		super();
+		_id = id;
 	}
 
+//	Methods:
 	public String get_firstName() {
 		return _firstName;
 	}
 
 	public void set_firstName(String _firstName) {
 		this._firstName = _firstName;
+	}
+
+	public String get_lastName() {
+		return _lastName;
+	}
+
+	public void set_lastName(String lastName) {
+		_lastName = lastName;
 	}
 
 	public int get_telNumber() {
@@ -103,7 +119,7 @@ public class Participant {
 		this._gender = _gender;
 	}
 
-	public int get_id() {
+	public long get_id() {
 		return _id;
 	}
 
