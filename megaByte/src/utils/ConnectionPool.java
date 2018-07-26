@@ -11,7 +11,7 @@ public class ConnectionPool {
 	private static ConnectionPool _instance = new ConnectionPool();
 	private Set<Connection> _connections;
 	private String _url = "jdbc:mysql://localhost:3306/Megabyte?allowPublicKeyRetrieval=true&useSSL=false&&serverTimezone=UTC";
-	private String _user = "igor";
+	private String _user = "user";
 	private String _password = "12345678";
 
 //	Constructors:
