@@ -6,4 +6,5 @@
  *
  */
 module megaByte {
+	requires java.sql;
 }

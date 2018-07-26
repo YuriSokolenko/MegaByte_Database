@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Event {
 //	Members:
-	private final int _id;
+	private final long _id;
 	private String _name;
 	private Date _date;
 	private EventStatus _status;
@@ -17,12 +17,12 @@ public class Event {
 	private String _place;
 	private double _price;
 	private int _participantsQuantity;
-	private String _organizer;
+	private Organizer _organizer;
 
 //	Constructors:
 
-	public Event(int id, String _name, Date _date, EventStatus _status, EventType _type, String _place, double _price,
-			int _participantsQuantity, String _organizer) {
+	public Event(long id, String _name, Date _date, EventStatus _status, EventType _type, String _place, double _price,
+			int _participantsQuantity, Organizer _organizer) {
 		super();
 
 		_id = id;
@@ -37,7 +37,7 @@ public class Event {
 	}
 
 //	Methods:
-	public int getId() {
+	public long getId() {
 		return _id;
 	}
 
@@ -97,11 +97,11 @@ public class Event {
 		this._participantsQuantity = _participantsQuantity;
 	}
 
-	public String get_organizer() {
+	public Organizer get_organizer() {
 		return _organizer;
 	}
 
-	public void set_organizer(String _organizer) {
+	public void set_organizer(Organizer _organizer) {
 		this._organizer = _organizer;
 	}
 
