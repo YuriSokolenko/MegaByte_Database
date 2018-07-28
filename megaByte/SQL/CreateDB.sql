@@ -12,6 +12,7 @@ CREATE TABLE `Participant`(
     `Birthdate` date,
     `Repatriation_year` date,
     `Interests` varchar(512),
+    `Last_active date` date,
     `Gender` varchar(32),
     primary key (`Id`)
 )ENGINE=InnoDB;
