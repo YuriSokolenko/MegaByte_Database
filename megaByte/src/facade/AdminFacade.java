@@ -3,6 +3,7 @@ package facade;
 import java.util.Collection;
 
 import beans.Event;
+import dao.EventDAO;
 import dao.EventDBDAO;
 import dao.OrganizerDBDAO;
 import dao.ParticipantDBDAO;
@@ -33,20 +34,18 @@ public class AdminFacade extends Client implements MegabyteClientFacade {
 	public void createEvent(Event event) throws MegabyteSystemException {
 		// validate if the event exist and if there is event with same name
 		try {
-			if ((_eventDAO.getEvent(event.getId()) == null)) {
-				{
-					if (_eventDAO.getEventByName(event.get_name()) == null) {
-						_eventDAO.createEvent(event);
-					}
-				}
+			if ((_eventDAO.getEvent(event.getId()) == null)){
+					{ if(_eventDAO.getEventByName(event.get_name()) == null) {
+				_eventDAO.createEvent(event);}}
 			} else {
 				throw new MegabyteSystemException("Company with the same name or ID already exist");
 			}
-		} catch (
+		}catch(
 
-		MegabyteSystemException e) {
-			throw new MegabyteSystemException("Can`t create Company ", e);
-		}
+	MegabyteSystemException e)
+	{
+		throw new MegabyteSystemException("Can`t create Company ", e);
+	}
 	}
 
 	// delete company and all its coupons
