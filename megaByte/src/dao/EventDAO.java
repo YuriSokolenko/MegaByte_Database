@@ -19,6 +19,8 @@ public interface EventDAO {
 
 	public Event getEvent(long id);
 
+	public Event getEventByName(String name);
+
 	public Collection<Event> getAllEvents();
 
 	public Collection<Event> getEventsByType(EventType type);

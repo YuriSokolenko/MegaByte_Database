@@ -17,17 +17,17 @@ import beans.Organizer;
 import utils.ConnectionPool;
 
 public class EventDBDAO implements EventDAO {
-//	Attributes:
+	// Attributes:
 	private ConnectionPool _pool;
 	private OrganizerDAO _organizerDao;
 
-//	Constructors:
+	// Constructors:
 	public EventDBDAO() {
 		super();
 		_pool = ConnectionPool.getConnectionPool();
 		_organizerDao = new OrganizerDBDAO();
 	}// c-tor
-//	Methods:
+		// Methods:
 
 	@Override
 	public void createEvent(Event event) {
@@ -168,5 +168,29 @@ public class EventDBDAO implements EventDAO {
 		}
 		return eventsByOrganizer;
 	}// getEventsByOrganizer
+
+	@Override
+
+	public Event getEventByName(String name) {
+		Event event = null;
+		try {
+			Connection conn = _pool.getConnection();
+			PreparedStatement statement = conn.prepareStatement("select * from Event where Name = ?;");
+			statement.setString(1, name);
+			ResultSet result = statement.executeQuery();
+			result.next();
+			event = new Event(result.getLong("Id"), result.getString("Name"),
+					new Date(result.getDate("Date").getTime()), EventStatus.valueOf(result.getString("Status")),
+					EventType.valueOf(result.getString("Type")), result.getString("Place"), result.getDouble("Price"),
+					result.getInt("Participants_quantity"), _organizerDao.getOrganizer(result.getLong("Organizer")));
+			_pool.returnConnection(conn);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return event;
+	}// getEventByName. Needed for validations in facade
 
 }// EventDBDAO
