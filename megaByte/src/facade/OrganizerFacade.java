@@ -30,7 +30,7 @@ public class OrganizerFacade extends Client implements MegabyteClientFacade {
 			_eventDAO.addEventToOrganizer_Event(event, _currentOrganizer);
 			System.out.println("Event created");
 		}
-		// 12
+		// 1223
 		return event;
 
 	}
