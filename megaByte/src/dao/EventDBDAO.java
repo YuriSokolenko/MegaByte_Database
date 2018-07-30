@@ -193,4 +193,14 @@ public class EventDBDAO implements EventDAO {
 		return event;
 	}// getEventByName. Needed for validations in facade
 
+	public void addEventToOrganizer_Event(Event event, Organizer currentOrganizer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void removeEventFromJoinTables(Event event) {
+		// TODO Auto-generated method stub
+
+	}
+
 }// EventDBDAO

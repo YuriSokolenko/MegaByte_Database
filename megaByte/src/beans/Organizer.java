@@ -1,11 +1,12 @@
 package beans;
 
+import java.util.Collection;
 import java.util.Date;
 
 public class Organizer extends Participant {
 	private int _eventsQuant;
 
-//	Constructors:
+	// Constructors:
 	public Organizer(long _id, String _firstName, String lastName, int _telNumber, String adress, String _city,
 			String _district, Date _birthdate, Date _repatriationYear, String _interests, Date _lastActiveDate,
 			Gender _gender, int eventsQuant) {
@@ -23,7 +24,7 @@ public class Organizer extends Participant {
 		_eventsQuant = eventsQuant;
 	}
 
-//	Methods:
+	// Methods:
 	public int get_eventsQuant() {
 		return _eventsQuant;
 	}
@@ -36,6 +37,11 @@ public class Organizer extends Participant {
 	public String toString() {
 		return "Organizer [_eventsQuant=" + _eventsQuant + ", _id=" + _id + ", _firstName=" + _firstName
 				+ ", _lastName=" + _lastName + "]";
+	}
+
+	public Collection<Event> getAllEVents() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }// Participant
