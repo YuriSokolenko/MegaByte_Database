@@ -1,9 +1,9 @@
 package dao;
 
+import java.sql.Date;
 import java.util.Collection;
 
 import beans.Gender;
-import beans.Interests;
 import beans.Participant;
 
 public interface ParticipantDAO {
@@ -17,11 +17,11 @@ public interface ParticipantDAO {
 
 	public Collection<Participant> getAllParticipants();
 
-	public Collection<Participant> getParticipantsByInterests(Interests interest);
+	public Collection<Participant> getParticipantsByInterests(String interest);
 
 	public Collection<Participant> getParticipantsByCity(String city);
 
-	public Collection<Participant> getParticipantsByAge(int minAge, int maxAge);
+	public Collection<Participant> getParticipantsByAge(Date minAge, Date maxAge);
 
 	public Collection<Participant> getParticipantsByDistrict(String city, String district);
 

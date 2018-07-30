@@ -6,11 +6,11 @@ public class Organizer extends Participant {
 	private int _eventsQuant;
 
 //	Constructors:
-	public Organizer(long _id, String _firstName, String lastName, int _telNumber, String _city, String _district,
-			Date _birthdate, Date _repatriationYear, String _interests, Date _lastActiveDate, Gender _gender,
-			int eventsQuant) {
-		super(_id, _firstName, lastName, _telNumber, _city, _district, _birthdate, _repatriationYear, _interests,
-				_lastActiveDate, _gender);
+	public Organizer(long _id, String _firstName, String lastName, int _telNumber, String adress, String _city,
+			String _district, Date _birthdate, Date _repatriationYear, String _interests, Date _lastActiveDate,
+			Gender _gender, int eventsQuant) {
+		super(_id, _firstName, lastName, _telNumber, adress, _city, _district, _birthdate, _repatriationYear,
+				_interests, _lastActiveDate, _gender);
 		_eventsQuant = eventsQuant;
 
 	}// C-tor

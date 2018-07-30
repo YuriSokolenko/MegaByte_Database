@@ -9,6 +9,7 @@ public class Participant {
 	protected String _lastName;
 	protected int _telNumber;
 	protected String _city;
+	protected String _adress;
 	protected String _district;
 	protected Date _birthdate;
 	protected Date _repatriationYear;
@@ -17,13 +18,15 @@ public class Participant {
 	protected Gender _gender;
 
 //	Constructors:
-	public Participant(long _id, String _firstName, String lastName, int _telNumber, String _city, String _district,
-			Date _birthdate, Date _repatriationYear, String _interests, Date _lastActiveDate, Gender _gender) {
+	public Participant(long _id, String _firstName, String lastName, int _telNumber, String _adress, String _city,
+			String _district, Date _birthdate, Date _repatriationYear, String _interests, Date _lastActiveDate,
+			Gender _gender) {
 		super();
 		this._id = _id;
 		this._firstName = _firstName;
 		this._lastName = lastName;
 		this._telNumber = _telNumber;
+		this._adress = _adress;
 		this._city = _city;
 		this._district = _district;
 		this._birthdate = _birthdate;
@@ -61,6 +64,14 @@ public class Participant {
 
 	public void set_telNumber(int _telNumber) {
 		this._telNumber = _telNumber;
+	}
+
+	public String get_adress() {
+		return _adress;
+	}
+
+	public void set_adress(String adress) {
+		_adress = adress;
 	}
 
 	public String get_city() {
@@ -121,6 +132,11 @@ public class Participant {
 
 	public long get_id() {
 		return _id;
+	}
+
+	public int getAge() {
+		int age = _birthdate.getYear();
+		return age;
 	}
 
 //	Methods
