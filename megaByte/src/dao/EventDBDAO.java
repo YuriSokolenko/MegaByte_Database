@@ -198,4 +198,9 @@ public class EventDBDAO implements EventDAO {
 
 	}
 
+	public void removeEventFromJoinTables(Event event) {
+		// TODO Auto-generated method stub
+
+	}
+
 }// EventDBDAO
