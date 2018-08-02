@@ -2,7 +2,8 @@ package facade;
 
 import java.util.Collection;
 
-import beans.Event;
+import beans.Organizer;
+import beans.Participant;
 import dao.EventDBDAO;
 import dao.OrganizerDBDAO;
 import dao.ParticipantDBDAO;
@@ -31,69 +32,54 @@ public class AdminFacade extends Client implements MegabyteClientFacade {
 		return null;
 	}
 
-	public void createEvent(Event event) throws MegabyteSystemException {
-		// validate if the event exist and if there is event with same name
-		try {
-			if ((_eventDAO.getEvent(event.getId()) == null)) {
-				{
-					if (_eventDAO.getEventByName(event.get_name()) == null) {
-						_eventDAO.createEvent(event);
-					}
-				}
-			} else {
-				throw new MegabyteSystemException("Company with the same name or ID already exist");
-			}
-		} catch (
-
-		MegabyteSystemException e) {
-			throw new MegabyteSystemException("Can`t create Company ", e);
+	public void createOrganizer(Organizer org) throws MegabyteSystemException {
+		if (_organizerDAO.getOrganizer(org.get_id()) == null) {
+			_organizerDAO.createOrganizer(org);
+		} else {
+			throw new MegabyteSystemException("This organizer is already exist");
 		}
 	}
 
-	// delete company and all its coupons
-	public void removeCompany(Company company) throws MegabyteSystemException {
-		try {
-			companyDao.removeAllCouponsOfCompany(company);
-		} catch (MegabyteSystemException e) {
-			throw new MegabyteSystemException("Can`t remove coupons of this company", e);
-		}
-		try {
-			companyDao.removeCompany(company);
-		} catch (MegabyteSystemException e) {
-			throw new MegabyteSystemException("Cant remove the Company", e);
+	public void createParticipant(Participant part) throws MegabyteSystemException {
+		if (_participantDAO.getParticipant(part.get_id()) == null) {
+			_participantDAO.createParticipant(part);
+		} else {
+			throw new MegabyteSystemException("This participant is already exist");
 		}
 	}
 
-	public void updateCompany(Company company) {
-		companyDao.updateCompany(company);
+	public void removeOrganizer(Organizer org) throws MegabyteSystemException {
+		if (_organizerDAO.getOrganizer(org.get_id()) != null) {
+			_organizerDAO.removeOrganizer(org);
+		} else
+			throw new MegabyteSystemException("Can`t remove organizer, the organizer not found");
 	}
 
-	public Company getCompany(long id) throws MegabyteSystemException {
-		return companyDao.getCompany(id);
+	public void removeParticipant(Participant part) throws MegabyteSystemException {
+		if (_participantDAO.getParticipant(part.get_id()) != null) {
+			_participantDAO.removeParticipant(part);
+		} else
+			throw new MegabyteSystemException("Can`t remove participant, the participant not found");
 	}
 
-	public Collection<Company> getAllCompanies() throws MegabyteSystemException {
-		return companyDao.getAllCompanies();
+	public void updateOrganizer(Organizer org) {
+		_organizerDAO.removeOrganizer(org);
 	}
 
-	public void createCustomer(Customer cust) {
-		customerDao.createCustomer(cust);
+	public void updateParticipant(Participant part) {
+		_participantDAO.removeParticipant(part);
 	}
 
-	public void removeCustomer(Customer cust) {
-		customerDao.removeCustomer(cust);
+	public Organizer getOrganizer(long id) {
+		return _organizerDAO.getOrganizer(id);
 	}
 
-	public void updateCustomer(Customer cust) {
-		customerDao.removeCustomer(cust);
+	public Participant getParticipant(long id) {
+		return _participantDAO.getParticipant(id);
 	}
 
-	public Customer getCustomer(long id) {
-		return customerDao.getCustomer(id);
-	}
-
-	public Collection<Customer> getAllCustomers() {
-		return customerDao.getAllCustomers();
+	public Collection<Organizer> getAllOrganizer() {
+		return _organizerDAO.getAllOrganizers();
 	}
 
 }

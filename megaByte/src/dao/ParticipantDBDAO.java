@@ -99,7 +99,7 @@ public class ParticipantDBDAO implements ParticipantDAO {
 	}// updateParticipant
 
 	@Override
-	public Participant getParticipant(int id) {
+	public Participant getParticipant(long id) {
 		Participant participant = null;
 		try {
 			Connection conn = _pool.getConnection();
