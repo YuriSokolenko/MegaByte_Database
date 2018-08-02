@@ -19,12 +19,13 @@ public class AdminFacade extends Client implements MegabyteClientFacade {
 	}
 
 	@Override
-	public MegabyteClientFacade login(String name, String password, ClientType clientType) {
+	public MegabyteClientFacade login(String name, String password, ClientType clientType)
+			throws MegabyteSystemException {
 		if (clientType == ClientType.ADMIN) {
 			if (name == "admin" && password == "1234") {
 				return new AdminFacade();
 			} else {
-				System.out.println("Username or password is incorrect. Please try again ");
+				throw new MegabyteSystemException("Username or password is incorrect. Please try again ");
 			}
 		}
 		return null;

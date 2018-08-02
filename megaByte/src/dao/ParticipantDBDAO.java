@@ -10,16 +10,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import beans.Event;
 import beans.Gender;
 import beans.Participant;
 import utils.ConnectionPool;
 
 public class ParticipantDBDAO implements ParticipantDAO {
 	private ConnectionPool _pool;
+	EventDAO _eventDAO;
 
 	public ParticipantDBDAO() {
 		super();
 		_pool = ConnectionPool.getConnectionPool();
+		_eventDAO = new EventDBDAO();
 	}// c-tor
 
 	@Override
@@ -56,6 +59,9 @@ public class ParticipantDBDAO implements ParticipantDAO {
 			PreparedStatement statement = conn.prepareStatement("delete from `Participant` where Id = ?;");
 			statement.setLong(1, participant.get_id());
 			statement.executeUpdate();
+			statement.close();
+			statement = conn.prepareStatement("delete from Participant_event where Participant_id = ?;");
+			statement.setLong(1, participant.get_id());
 			statement.close();
 			_pool.returnConnection(conn);
 		} catch (InterruptedException e) {
@@ -223,5 +229,25 @@ public class ParticipantDBDAO implements ParticipantDAO {
 		}
 		return participantsByGender;
 	}// getParticipantsByGender
+
+	@Override
+	public void signInToEvent(Event event, Participant participant) {
+		event.set_participantsQuantity(1);
+		_eventDAO.updateEvent(event);
+		Connection conn;
+		try {
+			conn = _pool.getConnection();
+			PreparedStatement stm = conn
+					.prepareStatement("insert into Participant_event(Participant_id, Event_id) values(?, ?);");
+			stm.setLong(1, participant.get_id());
+			stm.setLong(1, event.getId());
+			stm.close();
+			_pool.returnConnection(conn);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}// signInToEvent
 
 }// ParticipantDBDAO
