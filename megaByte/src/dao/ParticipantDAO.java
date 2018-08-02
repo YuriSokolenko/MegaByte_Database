@@ -13,7 +13,7 @@ public interface ParticipantDAO {
 
 	public void updateParticipant(Participant participant);
 
-	public Participant getParticipant(int id);
+	public Participant getParticipant(long id);
 
 	public Collection<Participant> getAllParticipants();
 
