@@ -26,22 +26,44 @@ public class ParticipantDBDAO implements ParticipantDAO {
 	}// c-tor
 
 	@Override
+	public boolean login(String name, String Password) {
+		boolean ret = false;
+		try {
+			Connection conn = _pool.getConnection();
+			PreparedStatement stm = conn.prepareStatement("select * from `Paricipant` where ``= ? and `Password` = ?");// TODO:
+																														// fix
+																														// this
+																														// login
+																														// method
+			_pool.returnConnection(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}// login
+
+	@Override
 	public void createParticipant(Participant participant) {
 		try {
 			Connection conn = _pool.getConnection();
 			PreparedStatement statement = conn.prepareStatement(
-					"insert into `Participant` (Id, First_Name, Last_Name, Tel_Number, Adress, City, District, Birthdate, Repatriation_year, Interests, Gender) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ");
+					"insert into `Participant` (Id, First_Name, Last_Name, Password, Email, Tel_Number, Adress, City, District, Birthdate, Repatriation_year, Interests, Last_Active_Date, Gender) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ");
 			statement.setLong(1, participant.get_id());
 			statement.setString(2, participant.get_firstName());
 			statement.setString(3, participant.get_lastName());
-			statement.setInt(4, participant.get_telNumber());
-			statement.setString(5, participant.get_adress());
-			statement.setString(6, participant.get_city());
-			statement.setString(7, participant.get_district());
-			statement.setDate(8, new Date(participant.get_birthdate().getTime()));
-			statement.setDate(9, new Date(participant.get_repatriationYear().getTime()));
-			statement.setString(10, participant.get_interests());
-			statement.setString(11, participant.get_gender().toString());
+			statement.setString(4, participant.get_password());
+			statement.setString(5, participant.get_email());
+			statement.setInt(6, participant.get_telNumber());
+			statement.setString(7, participant.get_adress());
+			statement.setString(8, participant.get_city());
+			statement.setString(9, participant.get_district());
+			statement.setDate(10, new Date(participant.get_birthdate().getTime()));
+			statement.setDate(11, new Date(participant.get_repatriationYear().getTime()));
+			statement.setString(12, participant.get_interests());
+			statement.setDate(13, new Date(participant.get_lastActiveDate().getTime()));
+			statement.setString(14, participant.get_gender().toString());
 			statement.executeUpdate();
 			statement.close();
 			_pool.returnConnection(conn);
@@ -79,15 +101,17 @@ public class ParticipantDBDAO implements ParticipantDAO {
 					"update `Participant` set First_Name = ?, Last_Name = ?, Tel_Number = ?, Adress = ?, City = ?, District = ?, Birthdate = ?, Repatriation_year = ?, Interests = ?, Gender = ? where Id = ?;");
 			statement.setString(1, participant.get_firstName());
 			statement.setString(2, participant.get_lastName());
-			statement.setInt(3, participant.get_telNumber());
-			statement.setString(4, participant.get_adress());
-			statement.setString(5, participant.get_city());
-			statement.setString(6, participant.get_district());
-			statement.setDate(7, new Date(participant.get_birthdate().getTime()));
-			statement.setDate(8, new Date(participant.get_repatriationYear().getTime()));
-			statement.setString(9, participant.get_interests());
-			statement.setString(10, participant.get_gender().toString());
-			statement.setLong(11, participant.get_id());
+			statement.setString(3, participant.get_password());
+			statement.setString(4, participant.get_email());
+			statement.setInt(5, participant.get_telNumber());
+			statement.setString(6, participant.get_adress());
+			statement.setString(7, participant.get_city());
+			statement.setString(8, participant.get_district());
+			statement.setDate(9, new Date(participant.get_birthdate().getTime()));
+			statement.setDate(10, new Date(participant.get_repatriationYear().getTime()));
+			statement.setString(11, participant.get_interests());
+			statement.setDate(12, new Date(participant.get_lastActiveDate().getTime()));
+			statement.setString(13, participant.get_gender().toString());
 			statement.executeUpdate();
 			statement.close();
 			_pool.returnConnection(conn);
@@ -108,9 +132,9 @@ public class ParticipantDBDAO implements ParticipantDAO {
 			ResultSet result = statement.executeQuery();
 			result.next();
 			participant = new Participant(result.getLong("Id"), result.getString("First_name"),
-					result.getString("Last_name"), result.getInt("Tel_number"), result.getString("Adress"),
-					result.getString("City"), result.getString("District"),
-					new java.util.Date(result.getDate("Birthdate").getTime()),
+					result.getString("Last_name"), result.getString("User_Name"), result.getString("email"),
+					result.getInt("Tel_number"), result.getString("Adress"), result.getString("City"),
+					result.getString("District"), new java.util.Date(result.getDate("Birthdate").getTime()),
 					new java.util.Date(result.getDate("Repatriation_year").getTime()), result.getString("Interests"),
 					new java.util.Date(result.getDate("Last_active date").getTime()),
 					Gender.valueOf(result.getString("Gender")));
@@ -134,9 +158,9 @@ public class ParticipantDBDAO implements ParticipantDAO {
 			ResultSet result = statement.executeQuery("select * from `Participant`;");
 			while (result.next()) {
 				participants.add(new Participant(result.getLong("Id"), result.getString("First_name"),
-						result.getString("Last_name"), result.getInt("Tel_number"), result.getString("Adress"),
-						result.getString("City"), result.getString("District"),
-						new java.util.Date(result.getDate("Birthdate").getTime()),
+						result.getString("Last_name"), result.getString("User_Name"), result.getString("email"),
+						result.getInt("Tel_number"), result.getString("Adress"), result.getString("City"),
+						result.getString("District"), new java.util.Date(result.getDate("Birthdate").getTime()),
 						new java.util.Date(result.getDate("Repatriation_year").getTime()),
 						result.getString("Interests"), new java.util.Date(result.getDate("Last_active date").getTime()),
 						Gender.valueOf(result.getString("Gender"))));
@@ -163,9 +187,9 @@ public class ParticipantDBDAO implements ParticipantDAO {
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
 				participantsByInterests.add(new Participant(result.getLong("Id"), result.getString("First_name"),
-						result.getString("Last_name"), result.getInt("Tel_number"), result.getString("Adress"),
-						result.getString("City"), result.getString("District"),
-						new java.util.Date(result.getDate("Birthdate").getTime()),
+						result.getString("Last_name"), result.getString("User_Name"), result.getString("email"),
+						result.getInt("Tel_number"), result.getString("Adress"), result.getString("City"),
+						result.getString("District"), new java.util.Date(result.getDate("Birthdate").getTime()),
 						new java.util.Date(result.getDate("Repatriation_year").getTime()),
 						result.getString("Interests"), new java.util.Date(result.getDate("Last_active date").getTime()),
 						Gender.valueOf(result.getString("Gender"))));

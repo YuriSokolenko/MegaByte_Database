@@ -2,7 +2,16 @@ package facade;
 
 import exceptions.MegabyteSystemException;
 
-public class Client implements MegabyteClientFacade {
+public class MegaByteSystem implements MegabyteClientFacade {
+	private static MegaByteSystem _instance = new MegaByteSystem();
+
+	private MegaByteSystem() {
+
+	}// c-tor
+
+	private static MegaByteSystem getMegaByteSystem() {
+		return _instance;
+	}// getInstance
 
 	@Override
 	public MegabyteClientFacade login(String name, String password, ClientType clientType)
@@ -17,5 +26,5 @@ public class Client implements MegabyteClientFacade {
 		default:
 			return null;
 		}
-	}
-}
+	}// login
+}// MegaByteSystem

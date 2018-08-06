@@ -8,6 +8,8 @@ import beans.Gender;
 import beans.Participant;
 
 public interface ParticipantDAO {
+	public boolean login(String userName, String Password);
+
 	public void createParticipant(Participant participant);
 
 	public void removeParticipant(Participant participant);

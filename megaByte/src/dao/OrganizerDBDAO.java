@@ -21,6 +21,28 @@ public class OrganizerDBDAO implements OrganizerDAO {
 	}
 
 	@Override
+	public boolean login(String userName, String password) {
+		boolean ret = false;
+		try {
+			Connection conn = _pool.getConnection();
+			PreparedStatement stm = conn
+					.prepareStatement("select * from `Organizer` where `User_Name` = ? and `Password` = ?");
+			stm.setString(1, userName);
+			stm.setString(2, password);
+			ResultSet res = stm.executeQuery();
+			if (res.next()) {
+				ret = true;
+			}
+			_pool.returnConnection(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+	@Override
 	public void createOrganizer(Organizer org) {
 		try {
 			Connection conn = _pool.getConnection();
@@ -80,6 +102,31 @@ public class OrganizerDBDAO implements OrganizerDAO {
 	}// updateOrganizer
 
 	@Override
+	public Organizer getOrganizerByUserName(String userName, String password) {
+		Organizer organizer = null;
+		try {
+			Connection conn = _pool.getConnection();
+			PreparedStatement statement = conn
+					.prepareStatement("select * from Organizer where `User_Name` = ? and `Password` = ?;");
+			statement.setString(1, userName);
+			statement.setString(1, password);
+			ResultSet result = statement.executeQuery();
+			result.next();
+			organizer = new Organizer(result.getLong("Id"), result.getString("User_Name"), result.getString("Password"),
+					result.getString("First_name"), result.getString("Last_name"), result.getInt("Tel_number"),
+					result.getInt("Events_quantity"));
+			statement.close();
+			result.close();
+			_pool.returnConnection(conn);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return organizer;
+	}
+
+	@Override
 	public Organizer getOrganizer(long id) {
 		Organizer organizer = null;
 		try {
@@ -88,8 +135,9 @@ public class OrganizerDBDAO implements OrganizerDAO {
 			statement.setLong(1, id);
 			ResultSet result = statement.executeQuery();
 			result.next();
-			organizer = new Organizer(result.getLong("Id"), result.getString("First_name"),
-					result.getString("Last_name"), result.getInt("Tel_number"), result.getInt("Events_quantity"));
+			organizer = new Organizer(result.getLong("Id"), result.getString("User_Name"), result.getString("Password"),
+					result.getString("First_name"), result.getString("Last_name"), result.getInt("Tel_number"),
+					result.getInt("Events_quantity"));
 			statement.close();
 			result.close();
 			_pool.returnConnection(conn);
@@ -109,8 +157,9 @@ public class OrganizerDBDAO implements OrganizerDAO {
 			Statement statement = conn.createStatement();
 			ResultSet result = statement.executeQuery("select * from Organizer;");
 			while (result.next()) {
-				organizers.add(new Organizer(result.getLong("Id"), result.getString("First_Name"),
-						result.getString("Last_Name"), result.getInt("Tel_Number"), result.getInt("Events_quantity")));
+				organizers.add(new Organizer(result.getLong("Id"), result.getString("User_Name"),
+						result.getString("Password"), result.getString("First_name"), result.getString("Last_name"),
+						result.getInt("Tel_number"), result.getInt("Events_quantity")));
 			}
 			result.close();
 			statement.close();

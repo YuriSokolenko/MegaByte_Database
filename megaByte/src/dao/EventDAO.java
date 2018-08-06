@@ -11,6 +11,7 @@ public interface EventDAO {
 	 * 
 	 * @param event
 	 */
+
 	public void createEvent(Event event);
 
 	public void removeEvent(Event event);
