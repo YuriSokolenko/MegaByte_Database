@@ -5,19 +5,24 @@ import java.util.Date;
 
 public class Organizer extends Participant {
 	private int _eventsQuant;
+	private String _userName;
+	private String _password;
 
 	// Constructors:
-	public Organizer(long _id, String _firstName, String lastName, int _telNumber, String adress, String _city,
-			String _district, Date _birthdate, Date _repatriationYear, String _interests, Date _lastActiveDate,
-			Gender _gender, int eventsQuant) {
-		super(_id, _firstName, lastName, _telNumber, adress, _city, _district, _birthdate, _repatriationYear,
-				_interests, _lastActiveDate, _gender);
+	public Organizer(long _id, String userName, String password, String _firstName, String lastName, String email,
+			int _telNumber, String adress, String _city, String _district, Date _birthdate, Date _repatriationYear,
+			String _interests, Date _lastActiveDate, Gender _gender, int eventsQuant) {
+		super(_id, _firstName, lastName, password, email, _telNumber, adress, _city, _district, _birthdate,
+				_repatriationYear, _interests, _lastActiveDate, _gender);
 		_eventsQuant = eventsQuant;
 
 	}// C-tor
 
-	public Organizer(long id, String firstName, String lastName, int telNumber, int eventsQuant) {
+	public Organizer(long id, String userName, String password, String firstName, String lastName, int telNumber,
+			int eventsQuant) {
 		super(id);
+		_userName = userName;
+		_password = password;
 		_firstName = firstName;
 		_lastName = lastName;
 		_telNumber = telNumber;

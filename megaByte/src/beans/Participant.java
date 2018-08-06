@@ -7,6 +7,8 @@ public class Participant {
 	protected final long _id;
 	protected String _firstName;
 	protected String _lastName;
+	protected String _password;
+	protected String _email;
 	protected int _telNumber;
 	protected String _city;
 	protected String _adress;
@@ -18,13 +20,20 @@ public class Participant {
 	protected Gender _gender;
 
 //	Constructors:
-	public Participant(long _id, String _firstName, String lastName, int _telNumber, String _adress, String _city,
-			String _district, Date _birthdate, Date _repatriationYear, String _interests, Date _lastActiveDate,
-			Gender _gender) {
+	public Participant(long id) {
+		super();
+		_id = id;
+	}
+
+	public Participant(long _id, String _firstName, String lastName, String password, String email, int _telNumber,
+			String _adress, String _city, String _district, Date _birthdate, Date _repatriationYear, String _interests,
+			Date _lastActiveDate, Gender _gender) {
 		super();
 		this._id = _id;
 		this._firstName = _firstName;
 		this._lastName = lastName;
+		this._password = password;
+		this._email = email;
 		this._telNumber = _telNumber;
 		this._adress = _adress;
 		this._city = _city;
@@ -36,9 +45,20 @@ public class Participant {
 		this._gender = _gender;
 	}// c-tor
 
-	public Participant(long id) {
-		super();
-		_id = id;
+	public String get_password() {
+		return _password;
+	}
+
+	public void set_password(String _password) {
+		this._password = _password;
+	}
+
+	public String get_email() {
+		return _email;
+	}
+
+	public void set_email(String _email) {
+		this._email = _email;
 	}
 
 //	Methods:

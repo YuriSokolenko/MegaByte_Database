@@ -94,7 +94,7 @@ public class Event {
 	}
 
 	public void set_participantsQuantity(int _participantsQuantity) {
-		this._participantsQuantity = _participantsQuantity;
+		this._participantsQuantity += _participantsQuantity;
 	}
 
 	public Organizer get_organizer() {

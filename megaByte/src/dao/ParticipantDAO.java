@@ -3,10 +3,13 @@ package dao;
 import java.sql.Date;
 import java.util.Collection;
 
+import beans.Event;
 import beans.Gender;
 import beans.Participant;
 
 public interface ParticipantDAO {
+	public boolean login(String userName, String Password);
+
 	public void createParticipant(Participant participant);
 
 	public void removeParticipant(Participant participant);
@@ -26,4 +29,6 @@ public interface ParticipantDAO {
 	public Collection<Participant> getParticipantsByDistrict(String city, String district);
 
 	public Collection<Participant> getParticipantsByGender(Gender gen);
+
+	public void signInToEvent(Event event, Participant participant);
 }

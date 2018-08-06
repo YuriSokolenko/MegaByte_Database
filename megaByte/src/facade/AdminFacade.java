@@ -9,7 +9,7 @@ import dao.OrganizerDBDAO;
 import dao.ParticipantDBDAO;
 import exceptions.MegabyteSystemException;
 
-public class AdminFacade extends Client implements MegabyteClientFacade {
+public class AdminFacade implements MegabyteClientFacade {
 
 	private EventDBDAO _eventDAO = new EventDBDAO();
 	private OrganizerDBDAO _organizerDAO = new OrganizerDBDAO();
@@ -20,16 +20,14 @@ public class AdminFacade extends Client implements MegabyteClientFacade {
 	}
 
 	@Override
-	public MegabyteClientFacade login(String name, String password, ClientType clientType) {
-		if (clientType == ClientType.ADMIN) {
-			if (name == "admin" && password == "1234") {
-				return new AdminFacade();
-			} else {
-				System.out.println("Username or password is incorrect. Please try again ");
-			}
+	public MegabyteClientFacade login(String name, String password, ClientType clientType)
+			throws MegabyteSystemException {
+		if (name == "admin" && password == "1234") {
+			return this;
+		} else {
+			throw new MegabyteSystemException("Username or password is incorrect. Please try again ");
 		}
-		return null;
-	}
+	}// login
 
 	public void createOrganizer(Organizer org) throws MegabyteSystemException {
 		if (_organizerDAO.getOrganizer(org.get_id()) == null) {
@@ -51,22 +49,22 @@ public class AdminFacade extends Client implements MegabyteClientFacade {
 		if (_organizerDAO.getOrganizer(org.get_id()) != null) {
 			_organizerDAO.removeOrganizer(org);
 		} else
-			throw new MegabyteSystemException("Can`t remove organizer, the organizer not found");
+			throw new MegabyteSystemException("Can`t remove organizer, the organizer is not found");
 	}
 
 	public void removeParticipant(Participant part) throws MegabyteSystemException {
 		if (_participantDAO.getParticipant(part.get_id()) != null) {
 			_participantDAO.removeParticipant(part);
 		} else
-			throw new MegabyteSystemException("Can`t remove participant, the participant not found");
+			throw new MegabyteSystemException("Can`t remove participant, the participant is not found");
 	}
 
 	public void updateOrganizer(Organizer org) {
-		_organizerDAO.removeOrganizer(org);
+		_organizerDAO.updateOrganizer(org);
 	}
 
 	public void updateParticipant(Participant part) {
-		_participantDAO.removeParticipant(part);
+		_participantDAO.updateParticipant(part);
 	}
 
 	public Organizer getOrganizer(long id) {

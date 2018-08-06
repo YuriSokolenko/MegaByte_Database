@@ -10,18 +10,22 @@ import dao.OrganizerDBDAO;
 import dao.ParticipantDBDAO;
 import exceptions.MegabyteSystemException;
 
-public class OrganizerFacade extends Client implements MegabyteClientFacade {
+public class OrganizerFacade implements MegabyteClientFacade {
 
 	private EventDBDAO _eventDAO = new EventDBDAO();
 	private OrganizerDBDAO _organizerDAO = new OrganizerDBDAO();
 	private ParticipantDBDAO _participantDAO = new ParticipantDBDAO();
-	private static Organizer _currentOrganizer;
+	private Organizer _currentOrganizer;
 
 	@Override
-	public MegabyteClientFacade login(String name, String password, ClientType clientType) {
-		// TODO Auto-generated method stub
-		return super.login(name, password, clientType);
-
+	public MegabyteClientFacade login(String name, String password, ClientType clientType)
+			throws MegabyteSystemException {
+		if (_organizerDAO.login(name, password)) {
+			_currentOrganizer = _organizerDAO.getOrganizerByUserName(name, password);
+			return this;
+		} else {
+			throw new MegabyteSystemException("Name or password are incorrect");
+		}
 	}
 
 	public Event createEvent(Event event) throws MegabyteSystemException {
