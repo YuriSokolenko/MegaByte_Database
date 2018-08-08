@@ -8,8 +8,13 @@ public class ParticipantFacade implements MegabyteClientFacade {
 	private ParticipantDAO partDAO = new ParticipantDBDAO();
 
 	@Override
-	public MegabyteClientFacade login(String name, String password, ClientType clientType) throws MegabyteSystemException{
-		if (partDAO.login(Integer.parseInt(name), Password))
+	public MegabyteClientFacade login(String name, String password, ClientType clientType)
+			throws MegabyteSystemException {
+		if (partDAO.login(name, password)) {
+			return this;
+		} else {
+			throw new MegabyteSystemException("Name or password are incorrect");
+		}
 	}// login
 
 }
